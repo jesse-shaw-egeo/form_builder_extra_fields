@@ -15,6 +15,7 @@ Widget buildTestableFieldWidget(Widget widget) {
 }
 
 bool formSave() => _formKey.currentState!.saveAndValidate();
+
 void formFieldDidChange(String fieldName, dynamic value) {
   _formKey.currentState!.fields[fieldName]!.didChange(value);
 }

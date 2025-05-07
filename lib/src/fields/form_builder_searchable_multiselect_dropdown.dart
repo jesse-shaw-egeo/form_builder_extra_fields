@@ -14,13 +14,13 @@ class FormBuilderSearchableMultiSelectDropdown<T> extends FormBuilderFieldDecora
   final List<T> selectedItems;
 
   ///called when a new items are selected
-  final ValueChanged<List<T>>? onChangedMultiSelection;
+  //final ValueChanged<List<T>>? onChangedMultiSelection;
 
   ///to customize list of items UI
-  final DropdownSearchBuilder<T>? dropdownBuilder;
+  final DropdownSearchBuilder<List<T>>? dropdownBuilder;
 
   ///to customize list of items UI in MultiSelection mode
-  final DropdownSearchBuilderMultiSelection<T>? dropdownBuilderMultiSelection;
+  //final DropdownSearchBuilderMultiSelection<T>? dropdownBuilderMultiSelection;
 
   ///customize the fields the be shown
   final DropdownSearchItemAsString<T>? itemAsString;
@@ -46,16 +46,16 @@ class FormBuilderSearchableMultiSelectDropdown<T> extends FormBuilderFieldDecora
   final AutovalidateMode? autoValidateMode;
 
   /// An optional method to call with the final value when the form is saved via
-  final FormFieldSetter<List<T>>? onSavedMultiSelection;
+  //final FormFieldSetter<List<T>>? onSavedMultiSelection;
 
   /// callback executed before applying value change
-  final BeforeChange<T>? onBeforeChange;
+  final BeforeChange<List<T>>? onBeforeChange;
 
   /// callback executed before applying values changes
-  final BeforeChangeMultiSelection<T>? onBeforeChangeMultiSelection;
+  //final BeforeChangeMultiSelection<T>? onBeforeChangeMultiSelection;
 
   ///define whatever we are in multi selection mode or single selection mode
-  final bool isMultiSelectionMode;
+  //final bool isMultiSelectionMode;
 
   ///called when a new item added on Multi selection mode
   final OnItemAdded<T>? popupOnItemAdded;
@@ -72,7 +72,7 @@ class FormBuilderSearchableMultiSelectDropdown<T> extends FormBuilderFieldDecora
   ///widget to add custom widget like addAll/removeAll on popup multi selection mode
   final ValidationMultiSelectionBuilder<T>? popupCustomMultiSelectionWidget;
 
-  final FormFieldValidator<List<T>>? validatorMultiSelection;
+  //final FormFieldValidator<List<T>>? validatorMultiSelection;
 
   ///function that returns item from API
   final DropdownSearchOnFind<T>? asyncItems;
@@ -95,12 +95,12 @@ class FormBuilderSearchableMultiSelectDropdown<T> extends FormBuilderFieldDecora
     super.autovalidateMode,
     super.enabled,
     super.focusNode,
-    FormFieldSetter<List<T>>? onSaved,
-    FormFieldValidator<List<T>>? validator,
+    super.onSaved,
+    super.validator,
     super.decoration,
     required super.name,
     super.initialValue,
-    ValueChanged<List<T>>? onChanged,
+    super.onChanged,
     super.valueTransformer,
     super.onReset,
     this.asyncItems,
@@ -112,7 +112,7 @@ class FormBuilderSearchableMultiSelectDropdown<T> extends FormBuilderFieldDecora
     this.filterFn,
     this.itemAsString,
     this.items = const [],
-    BeforeChangeMultiSelection<T>? onBeforeChange,
+    this.onBeforeChange,
     this.popupOnItemAdded,
     this.popupOnItemRemoved,
     this.popupSelectionWidget,
@@ -124,17 +124,18 @@ class FormBuilderSearchableMultiSelectDropdown<T> extends FormBuilderFieldDecora
     this.clearButtonProps,
     this.dropdownSearchTextStyle,
     this.dropdownButtonProps,
-    DropdownSearchBuilderMultiSelection<T>? dropdownBuilder,
+    this.dropdownBuilder,
+    this.selectedItem,
   })  : assert(T == String || compareFn != null),
-        onChangedMultiSelection = onChanged,
-        onSavedMultiSelection = onSaved,
-        onBeforeChangeMultiSelection = onBeforeChange,
-        validatorMultiSelection = validator,
-        dropdownBuilderMultiSelection = dropdownBuilder,
-        isMultiSelectionMode = true,
-        dropdownBuilder = null,
-        onBeforeChange = null,
-        selectedItem = null,
+        // onChangedMultiSelection = onChanged,
+        // onSavedMultiSelection = onSaved,
+        // onBeforeChangeMultiSelection = onBeforeChange,
+        // validatorMultiSelection = validator,
+        // dropdownBuilderMultiSelection = dropdownBuilder,
+        // isMultiSelectionMode = true,
+        // dropdownBuilder = null,
+        // onBeforeChange = null,
+        // selectedItem = null,
         // dropdownBuilder = null, // is in the super class
         // validator = null, // is in the super class
         // onSaved = null, // is in the super class
@@ -161,14 +162,14 @@ class FormBuilderSearchableMultiSelectDropdown<T> extends FormBuilderFieldDecora
               filterFn: filterFn,
               itemAsString: itemAsString,
               compareFn: compareFn,
-
               popupProps: popupProps,
-              //onSaved: onSavedMultiSelection,
+              onSaved: onSaved,
               onBeforeChange: onBeforeChange,
               onChanged: (value) {
                 state.didChange(value);
               },
-              selectedItems: state?.value ?? [],
+              dropdownBuilder: dropdownBuilder,
+              selectedItems: state.value ?? [],
             );
           },
         );
