@@ -148,16 +148,17 @@ class FormBuilderSearchableMultiSelectDropdown<T> extends FormBuilderFieldDecora
             final state = field as FormBuilderSearchableMultiSelectDropdownState<T>;
             return DropdownSearch<T>.multiSelection(
               autoValidateMode: autoValidateMode,
-              items: items,
-              asyncItems: asyncItems,
-              dropdownDecoratorProps: DropDownDecoratorProps(
-                dropdownSearchDecoration: state.decoration,
+              items: (filter, infiniteScrollProps) => asyncItems == null ? items : asyncItems(filter, infiniteScrollProps),
+              decoratorProps: DropDownDecoratorProps(
+                decoration: state.decoration,
                 textAlign: dropdownSearchTextAlign,
                 textAlignVertical: dropdownSearchTextAlignVertical,
                 baseStyle: dropdownSearchTextStyle,
               ),
-              clearButtonProps: clearButtonProps ?? const ClearButtonProps(),
-              dropdownButtonProps: dropdownButtonProps ?? const DropdownButtonProps(),
+              suffixProps: DropdownSuffixProps(
+                clearButtonProps: clearButtonProps ?? const ClearButtonProps(),
+                dropdownButtonProps: dropdownButtonProps ?? const DropdownButtonProps(),
+              ),
               enabled: state.enabled,
               filterFn: filterFn,
               itemAsString: itemAsString,
